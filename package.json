@@ -2,13 +2,15 @@
   "name": "chatbot",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src",
   "scripts": {
+    "start": "node .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "twitch-js": "^1.2.17"
+    "dotenv": "^8.2.0",
+    "twitch-js": "^2.0.0-beta.33"
   }
 }
