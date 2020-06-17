@@ -1,26 +1,26 @@
-const TwitchJs = require('twitch-js').default;
+const tmi = require('tmi.js');
 
-const { api, chat } = new TwitchJs({
-  username: process.env.TWITCH_BOT_NAME,
-  token: process.env.TWITCH_TOKEN
+require('dotenv').config();
+
+const client = new tmi.Client({
+  options: { debug: true },
+  connection: {
+    reconnect: true,
+    secure: true
+  },
+  identity: {
+    username: process.env.TWITCH_BOT_NAME,
+    password: process.env.TWITCH_TOKEN
+  },
+  channels: [ process.env.TWITCH_CHANNEL ]
 });
 
-// // Get featured streams.
-// api.get('streams/featured', { version: 'kraken' }).then(response => {
-//   console.log(response);
-//   // Do stuff ...
-// });
+client.connect();
 
-// const handleMessage = message => {
-//   console.log(message);
-//   // Do other stuff ...
-// };
+client.on('message', (channel, tags, message, self) => {
+  if(self) return;
 
-// // Listen for all events.
-// chat.on(TwitchJs.Chat.Events.ALL, handleMessage);
-
-// // Connect ...
-// chat.connect().then(() => {
-//   // ... and then join the channel.
-//   chat.join(channel);
-// });
+  if(message.toLowerCase() === '!hello') {
+    client.say(channel, `@${tags.username}, heya!`);
+  }
+});
